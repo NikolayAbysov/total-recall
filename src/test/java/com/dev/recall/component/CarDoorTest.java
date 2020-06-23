@@ -1,5 +1,8 @@
 package com.dev.recall.component;
 
+import com.dev.recall.model.CarDoor;
+import com.dev.recall.service.CarDoorService;
+import com.dev.recall.service.impl.CarDoorServiceIMpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CarDoorTest {
     private static CarDoor carDoor;
+    private static CarDoorService carDoorService = new CarDoorServiceIMpl();
 
     @BeforeEach
     void init() {
@@ -37,7 +41,7 @@ class CarDoorTest {
     void ActionDoorOk() {
         carDoor.closeDoor();
         assertFalse(carDoor.isDoorOpen());
-        carDoor.actionDoor();
+        carDoorService.actionDoor(carDoor);
         assertTrue(carDoor.isDoorOpen());
     }
 
@@ -45,7 +49,7 @@ class CarDoorTest {
     void ActionWindowOk() {
         carDoor.closeWindow();
         assertFalse(carDoor.isWindowOpen());
-        carDoor.actionWindow();
+        carDoorService.actionWindow(carDoor);
         assertTrue(carDoor.isWindowOpen());
 
     }

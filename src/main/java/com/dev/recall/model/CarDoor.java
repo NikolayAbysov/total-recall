@@ -1,4 +1,4 @@
-package com.dev.recall.component;
+package com.dev.recall.model;
 
 public class CarDoor {
     private boolean isDoorOpen;
@@ -14,10 +14,6 @@ public class CarDoor {
         return false;
     }
 
-    public boolean actionDoor() {
-        return isDoorOpen ? closeDoor() : openDoor();
-    }
-
     public boolean openWindow() {
         isWindowOpen = true;
         return true;
@@ -26,15 +22,6 @@ public class CarDoor {
     public boolean closeWindow() {
         isWindowOpen = false;
         return false;
-    }
-
-    public boolean actionWindow() {
-        return isWindowOpen ? closeWindow() : openWindow();
-    }
-
-    public void printDetailsToConsole() {
-        System.out.println("Door details: \n" + "isDoorOpen : " + isDoorOpen + "\n"
-                + "isWindowOpen : " + isWindowOpen);
     }
 
     public boolean isDoorOpen() {

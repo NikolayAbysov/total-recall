@@ -1,89 +1,95 @@
 package com.dev.recall.car;
 
+import com.dev.recall.model.Car;
+import com.dev.recall.service.CarService;
+import com.dev.recall.service.impl.CarServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CarTest {
     private static Car car;
+    private static CarService carService = new CarServiceImpl();
 
     @BeforeEach
     void init() {
         car = new Car();
+        car.setMaxSpeed(100);
+        car.setMaxPassengers(2);
     }
 
     @Test
     void changeCurrentSpeedOk() {
-        car.setMaxSpeed(100);
-        Assertions.assertEquals(50, car.changeCurrentSpeed(50));
-        Assertions.assertEquals(25, car.changeCurrentSpeed(-25));
+        carService.changeCurrentSpeed(car, 50);
+        Assertions.assertEquals(50, car.getCurrentSpeed());
+        carService.changeCurrentSpeed(car, -25);
+        Assertions.assertEquals(25, car.getCurrentSpeed());
     }
 
     @Test
     void changeCurrentSpeedNotOk() {
-        car.setMaxSpeed(100);
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            car.changeCurrentSpeed(200);
+            carService.changeCurrentSpeed(car, 200);
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            car.changeCurrentSpeed(-200);
+            carService.changeCurrentSpeed(car, -200);
         });
     }
 
     @Test
     void addPassengerOk() {
-        car.setMaxPassengers(5);
-        car.addPassenger();
+        carService.addPassenger(car);
         Assertions.assertEquals(1, car.getCurrentPassengersNum());
     }
 
     @Test
     void addPassengerNotOk() {
+        carService.addPassenger(car);
+        carService.addPassenger(car);
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            car.addPassenger();
+            carService.addPassenger(car);;
         });
     }
 
     @Test
     void detractPassengerOk() {
-        car.setMaxPassengers(5);
-        car.addPassenger();
-        car.detractPassenger();
+        carService.addPassenger(car);
+        carService.detractPassenger(car);
         Assertions.assertEquals(0, car.getCurrentPassengersNum());
     }
 
     @Test
     void detractPassengerNotOk() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            car.detractPassenger();
+            carService.detractPassenger(car);
         });
     }
 
     @Test
     void getPassengersOutOk() {
-        car.setMaxPassengers(2);
-        car.addPassenger();
-        car.addPassenger();
-        Assertions.assertEquals(0, car.getPassengersOut());
+        carService.addPassenger(car);
+        carService.addPassenger(car);
+        carService.getPassengersOut(car);
+        Assertions.assertEquals(0, car.getCurrentPassengersNum());
     }
 
     @Test
     void addWheelsOk() {
-        car.addWheels(5);
+        carService.addWheels(car, 5);
         Assertions.assertEquals(5, car.getWheels().length);
     }
 
     @Test
     void addWheelsNotOk() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            car.addWheels(-5);
+            carService.addWheels(car, -5);
         });
     }
 
     @Test
     void takeAllCarWheelsOffOk() {
-        car.addWheels(5);
-        car.takeAllCarWheelsOff();
+        carService.addWheels(car, 5);
+        carService.takeAllCarWheelsOff(car);
         Assertions.assertEquals(0, car.getWheels().length);
     }
 }
