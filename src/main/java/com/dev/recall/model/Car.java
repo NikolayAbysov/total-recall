@@ -1,8 +1,20 @@
 package com.dev.recall.model;
 
 import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "car")
 public class Car {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private final LocalDate manufactureDate;
     private String engineType;
     private int maxSpeed;
@@ -10,13 +22,25 @@ public class Car {
     private int maxPassengers;
     private int currentPassengersNum;
     private int currentSpeed;
+    @OneToMany
+    @OrderColumn(name = "car_wheels")
     private CarWheel[] wheels;
+    @OneToMany
+    @OrderColumn(name = "car_doors")
     private CarDoor[] doors;
 
     public Car() {
         this.manufactureDate = LocalDate.now();
         this.wheels = new CarWheel[0];
         this.doors = new CarDoor[0];
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getManufactureDate() {
