@@ -6,6 +6,8 @@ import com.dev.recall.model.CarWheel;
 
 public interface CarService {
 
+    public Car save(Car car);
+
     public void changeCurrentSpeed(Car car, int value);
 
     public void addPassenger(Car car);

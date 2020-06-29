@@ -1,5 +1,7 @@
 package com.dev.recall.service.impl;
 
+import com.dev.recall.dao.CarDao;
+import com.dev.recall.dao.impl.CarDaoImpl;
 import com.dev.recall.model.Car;
 import com.dev.recall.model.CarDoor;
 import com.dev.recall.model.CarWheel;
@@ -11,6 +13,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CarServiceImpl implements CarService {
+    private final CarDao carDao = new CarDaoImpl();
+
+    @Override
+    public Car save(Car car) {
+        return carDao.save(car);
+    }
+
     @Override
     public void changeCurrentSpeed(Car car, int value) {
         if (value < 0 && Math.abs(value) > car.getCurrentSpeed()) {
