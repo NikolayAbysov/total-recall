@@ -19,6 +19,6 @@ class CarDoorDaoImplTest {
 
     @Test
     void openDoorOk() {
-        assertEquals(carDoor, carDoorDao.save(carDoor));
+        assertNotNull(carDoorDao.save(carDoor).getId(), "Entity should have Id after save");
     }
 }
